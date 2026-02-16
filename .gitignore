@@ -1,0 +1,14 @@
+# Binarios y carpetas de construcción
+build/
+bin/
+obj/
+Ajedrez      # Nombre de tu ejecutable final
+
+# Configuración del editor (LSP)
+compile_commands.json
+.vscode/
+.nvim/
+
+# Archivos temporales de sistema
+.DS_Store
+Thumbs.db
