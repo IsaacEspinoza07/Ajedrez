@@ -1,4 +1,7 @@
 #include "Piezas.hpp"
+
+Pieza::~Pieza() {}
+
 // ***************** PEON ***************** //
 Peon::Peon(bool color, int x, int y)
 {
@@ -8,6 +11,7 @@ Peon::Peon(bool color, int x, int y)
     this->tipo = PEON;
     this->YaMovido = false; // intersa para el doble movimiento al inicio
 }
+void Peon::Dibujar() {}
 // ***************** TORRE ***************** //
 Torre::Torre(bool color, int x, int y)
 {
@@ -17,6 +21,8 @@ Torre::Torre(bool color, int x, int y)
     this->tipo = TORRE;
     this->YaMovido = false;
 }
+
+void Torre::Dibujar() {}
 // ***************** ALFIL ***************** //
 Alfil::Alfil(bool color, int x, int y)
 {
@@ -26,7 +32,7 @@ Alfil::Alfil(bool color, int x, int y)
     this->tipo = ALFIL;
     this->YaMovido = false;
 }
-
+void Alfil::Dibujar() {}
 // ***************** CABALLO ***************** //
 Caballo::Caballo(bool color, int x, int y)
 {
@@ -36,7 +42,7 @@ Caballo::Caballo(bool color, int x, int y)
     this->tipo = CABALLO;
     this->YaMovido = false;
 }
-
+void Caballo::Dibujar() {}
 // ***************** REINA ***************** //
 Reina::Reina(bool color, int x, int y)
 {
@@ -47,6 +53,7 @@ Reina::Reina(bool color, int x, int y)
     this->YaMovido = false;
 }
 
+void Reina::Dibujar() {}
 // ***************** REY ***************** //
 Rey::Rey(bool color, int x, int y)
 {
@@ -56,3 +63,4 @@ Rey::Rey(bool color, int x, int y)
     this->tipo = REY;
     this->YaMovido = false;
 }
+void Rey::Dibujar() {}
