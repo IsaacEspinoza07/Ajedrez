@@ -1,5 +1,6 @@
 #include "Tablero.hpp"
 #include "Piezas.hpp"
+#include "texturas.hpp"
 
 void Tablero::Inicializar()
 {
@@ -39,10 +40,18 @@ void Tablero::Inicializar()
 Tablero::Tablero()
 {
     Inicializar();
-    Dibujar();
 }
 // ****************************** //
-void Tablero::Dibujar() {}
+void Tablero::Dibujar(GestionTexturas &texturas)
+{
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            if (tablero[i][j] != nullptr) {
+                tablero[i][j]->Dibujar(texturas);
+            }
+        }
+    }
+}
 // ****************************** //
 
 Tablero::~Tablero()

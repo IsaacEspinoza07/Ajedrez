@@ -1,18 +1,18 @@
 #pragma once
 
 #include "Piezas.hpp"
+#include "texturas.hpp"
 
-enum { BLANCO = 0, NEGRO };
 class Tablero
 {
+  public:
     Tablero();
     ~Tablero();
 
-  public:
     Pieza *tablero[8][8];
 
     void Inicializar();
-    void Dibujar();
+    void Dibujar(GestionTexturas &texturas);
 
   private:
     unsigned int turno;
