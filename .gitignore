@@ -12,3 +12,5 @@ compile_commands.json
 # Archivos temporales de sistema
 .DS_Store
 Thumbs.db
+
+.cache/
