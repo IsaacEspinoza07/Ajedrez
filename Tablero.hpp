@@ -2,10 +2,11 @@
 
 #include "Piezas.hpp"
 
-enum TURNO { NINGUNO, BLANCO, NEGRO };
+enum { BLANCO = 0, NEGRO };
 class Tablero
 {
     Tablero();
+    ~Tablero();
 
   public:
     Pieza *tablero[8][8];
@@ -14,5 +15,5 @@ class Tablero
     void Dibujar();
 
   private:
-    TURNO turno;
+    unsigned int turno;
 };
