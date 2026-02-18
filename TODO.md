@@ -33,9 +33,11 @@ Aparte de esto, cuando recien salió mi idea de este 'proyectito' mi idea era NO
 escribir cada movimiento en una sección de entrada de texto del movimiento que se desea:
 
 Algo como:
-|-------|
+
+De una entrada:
+
 |   e4  |
-|-------|
+
 Y que se ejecutara el movimiento. Así que:
 
 # Boss final:
