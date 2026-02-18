@@ -3,16 +3,16 @@
 #include "texturas.hpp"
 enum { PEON, TORRE, ALFIL, CABALLO, REINA, REY };
 enum { BLANCO = 0, NEGRO };
-class Pieza
-{
-  public:
+class Pieza {
+public:
     virtual void Dibujar(GestionTexturas &texturas) = 0;
 
     int Obtener_x();
     int Obtener_y();
+    void CambiarPosicion(int nueva_fila, int nueva_col);
     virtual ~Pieza();
 
-  protected:
+protected:
     bool color;        // 0: Blanco, 1: Negro
     int coor_x;        // coordenadas a lo largo.
     int coor_y;        // coordenadas a lo alto.
@@ -21,63 +21,57 @@ class Pieza
 };
 
 // ******* PIEZAS ********* //
-class Peon : public Pieza
-{
-  public:
+class Peon : public Pieza {
+public:
     Peon(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
 
-  private:
+private:
 };
 
 // ******************************* //
-class Alfil : public Pieza
-{
-  public:
+class Alfil : public Pieza {
+public:
     Alfil(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
 
-  private:
+private:
 };
 
 // ******************************* //
-class Caballo : public Pieza
-{
-  public:
+class Caballo : public Pieza {
+public:
     Caballo(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
 
-  private:
+private:
 };
 
 // ******************************* //
-class Torre : public Pieza
-{
-  public:
+class Torre : public Pieza {
+public:
     Torre(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
 
-  private:
+private:
 };
 
 // ******************************* //
-class Reina : public Pieza
-{
-  public:
+class Reina : public Pieza {
+public:
     Reina(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
 
-  private:
+private:
 };
 
 // ******************************* //
-class Rey : public Pieza
-{
-  public:
+class Rey : public Pieza {
+public:
     Rey(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
 
-  private:
+private:
 };
 
 // *** FUNCION DE UTILIDAD *** //
