@@ -4,8 +4,8 @@
 
 void Pieza::CambiarPosicion(int nueva_fila, int nueva_col)
 {
-    this->coor_x = nueva_col;
-    this->coor_y = nueva_fila;
+    this->coor_x = nueva_fila;
+    this->coor_y = nueva_col;
 }
 
 float conversor_x(int x)
@@ -54,7 +54,7 @@ void Torre::Dibujar(GestionTexturas &texturas)
     Texture2D aDibujar = (color == BLANCO) ? texturas.torreBlanca : texturas.torreNegra;
 
     DrawTexturePro(aDibujar, {0.0f, 0.0f, (float)aDibujar.width, (float)aDibujar.height},
-                   {0, 0, 70, 70}, {conversor_x(this->coor_y), conversor_y(this->coor_x)}, 0.0f,
+                   {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
 }
 // ***************** ALFIL ***************** //
@@ -71,7 +71,7 @@ void Alfil::Dibujar(GestionTexturas &texturas)
     Texture2D aDibujar = (color == BLANCO) ? texturas.alfilBlanco : texturas.alfilNegro;
 
     DrawTexturePro(aDibujar, {0.0f, 0.0f, (float)aDibujar.width, (float)aDibujar.height},
-                   {0, 0, 70, 70}, {conversor_x(this->coor_y), conversor_y(this->coor_x)}, 0.0f,
+                   {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
 }
 
@@ -89,7 +89,7 @@ void Caballo::Dibujar(GestionTexturas &texturas)
     Texture2D aDibujar = (color == BLANCO) ? texturas.caballoBlanco : texturas.caballoNegro;
 
     DrawTexturePro(aDibujar, {0.0f, 0.0f, (float)aDibujar.width, (float)aDibujar.height},
-                   {0, 0, 70, 70}, {conversor_x(this->coor_y), conversor_y(this->coor_x)}, 0.0f,
+                   {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
 }
 // ***************** REINA ***************** //
@@ -107,7 +107,7 @@ void Reina::Dibujar(GestionTexturas &texturas)
     Texture2D aDibujar = (color == BLANCO) ? texturas.reinaBlanca : texturas.reinaNegra;
 
     DrawTexturePro(aDibujar, {0.0f, 0.0f, (float)aDibujar.width, (float)aDibujar.height},
-                   {0, 0, 70, 70}, {conversor_x(this->coor_y), conversor_y(this->coor_x)}, 0.0f,
+                   {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
 }
 // ***************** REY ***************** //
@@ -124,6 +124,6 @@ void Rey::Dibujar(GestionTexturas &texturas)
     Texture2D aDibujar = (color == BLANCO) ? texturas.reyBlanco : texturas.reyNegro;
 
     DrawTexturePro(aDibujar, {0.0f, 0.0f, (float)aDibujar.width, (float)aDibujar.height},
-                   {0, 0, 70, 70}, {conversor_x(this->coor_y), conversor_y(this->coor_x)}, 0.0f,
+                   {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
 }

@@ -21,6 +21,7 @@ int main()
 
     while (!WindowShouldClose()) {
         // 1- Actualizar
+        gestor.Actualizar();
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
