@@ -28,6 +28,17 @@ bool Pieza::ObtenerColor()
 {
     return color;
 }
+
+void Pieza::AlternarYaMovido()
+{
+    this->YaMovido = !this->YaMovido;
+}
+
+int Pieza::ObtenerTipoPieza()
+{
+    return tipo;
+}
+
 // **************************************** //
 
 // ***************** PEON ***************** //
@@ -50,17 +61,34 @@ void Peon::Dibujar(GestionTexturas &texturas)
 
 bool Peon::MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero)
 {
-    // PEON BLANCO
-    // Movimiento doble al inicio del turno
+    // Blanco (sube, -1) o Negro (baja, +1)
+    int orientacion = (color == BLANCO) ? -1 : 1;
 
-    // Movimiento no doble
+    // Movimiento simple (un paso nomás)
+    if (nueva_x == coor_x && nueva_y == coor_y + orientacion) {
+        return (tablero->tablero[nueva_y][nueva_x] == nullptr);
+        // Si a donde me muevo NO hay pieza, regreso true.
+    }
 
-    // Captura en diagonal
+    // Movimiento incial doble
+    if (nueva_x == coor_x && nueva_y == coor_y + (2 * orientacion) && !YaMovido) {
+        bool camino_libre = (tablero->tablero[coor_y + orientacion][coor_x] ==
+                             nullptr); // Si NO me salto nada, y...
+        bool nuevaPos_libre = (tablero->tablero[nueva_y][nueva_x] ==
+                               nullptr); // No capturo nada (porque es directamente enfrente)
+        return camino_libre && nuevaPos_libre;
+    }
 
-    // TODO: captura al paso
+    // Captura diagonal
+    if ((nueva_x == coor_x + 1 || nueva_x == coor_x - 1) && nueva_y == coor_y + orientacion) {
+        Pieza *piezaCapturada = tablero->tablero[nueva_y][nueva_x];
+        return (piezaCapturada != nullptr && piezaCapturada->ObtenerColor() != color);
+    }
+
+    // TODO: Caputa al paso
 
     // Si no paso nada de esto...
-    return 0;
+    return false;
 }
 
 // ***************** TORRE ***************** //

@@ -1,4 +1,5 @@
 #include "Gestor.hpp"
+#include "Piezas.hpp"
 #include "raylib.h"
 
 Gestor::Gestor(Tablero *tablero)
@@ -69,6 +70,7 @@ void Gestor::Actualizar()
                 return;
             }
 
+            // Impedir que se coma piezas del mismo color
             if (tablero->tablero[fila][col] != nullptr &&
                 tablero->tablero[fila_seleccionada][col_seleccionada]->ObtenerColor() ==
                     tablero->tablero[fila][col]->ObtenerColor()) {
@@ -77,7 +79,14 @@ void Gestor::Actualizar()
                 return;
             }
 
+            // ESTO es importante!! Esto gestiona el movimiento. Checa si la pieza a mover
+            // y su nueva ubicación es un movimiento valido. Si no lo es, no hace nada y la
+            // desselecciona pero si SI es, la mueve. Aqui tambien se cambiara de estado a
+            // "YaMovido = true" etc, dependiendo de la pieza.
             if (piezaSeleccionada->MovimientoPermitido(col, fila, this->tablero)) {
+                if (piezaSeleccionada->ObtenerTipoPieza() == PEON) {
+                    piezaSeleccionada->AlternarYaMovido();
+                }
                 // Si habia algo, borro la memoria
                 if (tablero->tablero[fila][col] != nullptr) {
                     delete tablero->tablero[fila][col];

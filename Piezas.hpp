@@ -17,6 +17,8 @@ public:
     virtual ~Pieza();
     virtual bool MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero) = 0;
     bool ObtenerColor();
+    void AlternarYaMovido();
+    int ObtenerTipoPieza();
 
 protected:
     bool color;        // 0: Blanco, 1: Negro
