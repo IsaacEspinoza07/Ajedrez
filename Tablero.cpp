@@ -37,6 +37,15 @@ void Tablero::Inicializar()
     }
 }
 // ****************************** //
+
+/*
+bool Tablero::CaminoLibre(int x_inicial, int y_inicial, int x_final, int y_final, bool diagonal)
+{
+    return true;
+}
+*/
+
+// ****************************** //
 Tablero::Tablero()
 {
     Inicializar();

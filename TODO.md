@@ -4,7 +4,7 @@ para terminar el proyecto de Ajedrez!!
 # Mécanicas de juego
 - [ ] Movimientos legales (peon se mueva como peón, caballo como caballo, etc.)
 - [ ] Implementar las colisiones (Un alfil no puede salir movimiento 1, pero caballo puede saltar piezas)
-- [ ] No poder capturar piezas del mismo color (Actualmente si se puede, pues apenas hay movimiento libre)
+- [-] No poder capturar piezas del mismo color (Actualmente si se puede, pues apenas hay movimiento libre)
 
 # Flujo del juego
 - [ ] Turnos
@@ -27,6 +27,7 @@ para terminar el proyecto de Ajedrez!!
 - [ ] Resaltar de rojo o algun color los movimientos que tiene una pieza 
 - [ ] Indicadores de turno (muy de menos)
 - [ ] Implementación de Blitz o otros modos de jueg con tiempo (osea, implementar un cronometro por jugador)
+- [ ] Distintos diseños creativos (muy únicos, honguitos, naturaleza, monitos, cualquier cosa a elección, incluso Importar propias)
 
 
 Aparte de esto, cuando recien salió mi idea de este 'proyectito' mi idea era NO usar mouse ni nada, si no

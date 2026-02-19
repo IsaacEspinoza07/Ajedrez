@@ -1,6 +1,9 @@
 #include "Piezas.hpp"
+#include "Tablero.hpp"
 #include "raylib.h"
 #include "texturas.hpp"
+
+// ************* DE PIEZA **************** //
 
 void Pieza::CambiarPosicion(int nueva_fila, int nueva_col)
 {
@@ -21,6 +24,12 @@ Pieza::~Pieza()
 {
 }
 
+bool Pieza::ObtenerColor()
+{
+    return color;
+}
+// **************************************** //
+
 // ***************** PEON ***************** //
 Peon::Peon(bool color, int x, int y)
 {
@@ -37,6 +46,21 @@ void Peon::Dibujar(GestionTexturas &texturas)
     DrawTexturePro(aDibujar, {0.0f, 0.0f, (float)aDibujar.width, (float)aDibujar.height},
                    {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
+}
+
+bool Peon::MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero)
+{
+    // PEON BLANCO
+    // Movimiento doble al inicio del turno
+
+    // Movimiento no doble
+
+    // Captura en diagonal
+
+    // TODO: captura al paso
+
+    // Si no paso nada de esto...
+    return 0;
 }
 
 // ***************** TORRE ***************** //
@@ -57,6 +81,12 @@ void Torre::Dibujar(GestionTexturas &texturas)
                    {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
 }
+
+bool Torre::MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero)
+{
+    return 1;
+}
+
 // ***************** ALFIL ***************** //
 Alfil::Alfil(bool color, int x, int y)
 {
@@ -73,6 +103,11 @@ void Alfil::Dibujar(GestionTexturas &texturas)
     DrawTexturePro(aDibujar, {0.0f, 0.0f, (float)aDibujar.width, (float)aDibujar.height},
                    {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
+}
+
+bool Alfil::MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero)
+{
+    return 1;
 }
 
 // ***************** CABALLO ***************** //
@@ -92,6 +127,12 @@ void Caballo::Dibujar(GestionTexturas &texturas)
                    {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
 }
+
+bool Caballo::MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero)
+{
+    return 1;
+}
+
 // ***************** REINA ***************** //
 Reina::Reina(bool color, int x, int y)
 {
@@ -110,6 +151,12 @@ void Reina::Dibujar(GestionTexturas &texturas)
                    {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
 }
+
+bool Reina::MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero)
+{
+    return 1;
+}
+
 // ***************** REY ***************** //
 Rey::Rey(bool color, int x, int y)
 {
@@ -126,4 +173,9 @@ void Rey::Dibujar(GestionTexturas &texturas)
     DrawTexturePro(aDibujar, {0.0f, 0.0f, (float)aDibujar.width, (float)aDibujar.height},
                    {0, 0, 70, 70}, {conversor_x(this->coor_x), conversor_y(this->coor_y)}, 0.0f,
                    WHITE);
+}
+
+bool Rey::MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero)
+{
+    return 1;
 }

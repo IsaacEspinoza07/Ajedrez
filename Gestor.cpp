@@ -69,18 +69,32 @@ void Gestor::Actualizar()
                 return;
             }
 
-            // Si habia algo, borro la memoria
-            if (tablero->tablero[fila][col] != nullptr) {
-                delete tablero->tablero[fila][col];
+            if (tablero->tablero[fila][col] != nullptr &&
+                tablero->tablero[fila_seleccionada][col_seleccionada]->ObtenerColor() ==
+                    tablero->tablero[fila][col]->ObtenerColor()) {
+                estadoActual = EstadoTurno::ESPERANDO_SELECCION;
+                piezaSeleccionada = nullptr;
+                return;
             }
 
-            // Luego cambio la posición de la pieza movida:
-            tablero->tablero[fila][col] = piezaSeleccionada; // Cambiar
-            tablero->tablero[fila_seleccionada][col_seleccionada] = nullptr;
+            if (piezaSeleccionada->MovimientoPermitido(col, fila, this->tablero)) {
+                // Si habia algo, borro la memoria
+                if (tablero->tablero[fila][col] != nullptr) {
+                    delete tablero->tablero[fila][col];
+                }
 
-            piezaSeleccionada->CambiarPosicion(col, fila);
-            piezaSeleccionada = nullptr;
-            estadoActual = EstadoTurno::ESPERANDO_SELECCION;
+                // Luego cambio la posición de la pieza movida:
+                tablero->tablero[fila][col] = piezaSeleccionada; // Cambiar
+                tablero->tablero[fila_seleccionada][col_seleccionada] = nullptr;
+
+                piezaSeleccionada->CambiarPosicion(col, fila);
+                piezaSeleccionada = nullptr;
+                estadoActual = EstadoTurno::ESPERANDO_SELECCION;
+            } else {
+                estadoActual = EstadoTurno::ESPERANDO_SELECCION;
+                piezaSeleccionada = nullptr;
+                return;
+            }
         }
     }
 }

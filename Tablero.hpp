@@ -3,9 +3,8 @@
 #include "Piezas.hpp"
 #include "texturas.hpp"
 
-class Tablero
-{
-  public:
+class Tablero {
+public:
     Tablero();
     ~Tablero();
 
@@ -13,7 +12,9 @@ class Tablero
 
     void Inicializar();
     void Dibujar(GestionTexturas &texturas);
+    // bool CaminoLibre(int x_inicial, int y_inicial, int x_final, int y_final, bool diagonal =
+    // false);
 
-  private:
+private:
     unsigned int turno;
 };
