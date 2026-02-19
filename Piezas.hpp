@@ -17,6 +17,7 @@ public:
     virtual ~Pieza();
     virtual bool MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero) = 0;
     bool ObtenerColor();
+    bool ObtenerYaMovido();
     void AlternarYaMovido();
     int ObtenerTipoPieza();
 
@@ -33,7 +34,7 @@ class Peon : public Pieza {
 public:
     Peon(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
-    virtual bool MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero) override;
+    virtual bool MovimientoPermitido(int nueva_x, int y_nueva, Tablero *tablero) override;
 
 private:
 };
@@ -43,7 +44,7 @@ class Alfil : public Pieza {
 public:
     Alfil(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
-    virtual bool MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero) override;
+    virtual bool MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero) override;
 
 private:
 };
@@ -53,7 +54,7 @@ class Caballo : public Pieza {
 public:
     Caballo(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
-    virtual bool MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero) override;
+    virtual bool MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero) override;
 
 private:
 };
@@ -63,7 +64,7 @@ class Torre : public Pieza {
 public:
     Torre(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
-    virtual bool MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero) override;
+    virtual bool MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero) override;
 
 private:
 };
@@ -73,7 +74,7 @@ class Reina : public Pieza {
 public:
     Reina(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
-    virtual bool MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero) override;
+    virtual bool MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero) override;
 
 private:
 };
@@ -83,7 +84,7 @@ class Rey : public Pieza {
 public:
     Rey(bool color, int x, int y);
     void Dibujar(GestionTexturas &texturas) override;
-    virtual bool MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero) override;
+    virtual bool MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero) override;
 
 private:
 };

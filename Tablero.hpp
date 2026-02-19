@@ -12,8 +12,7 @@ public:
 
     void Inicializar();
     void Dibujar(GestionTexturas &texturas);
-    // bool CaminoLibre(int x_inicial, int y_inicial, int x_final, int y_final, bool diagonal =
-    // false);
+    bool CaminoLibre(int x_inicial, int y_inicial, int x_final, int y_final);
 
 private:
     unsigned int turno;

@@ -38,12 +38,47 @@ void Tablero::Inicializar()
 }
 // ****************************** //
 
-/*
-bool Tablero::CaminoLibre(int x_inicial, int y_inicial, int x_final, int y_final, bool diagonal)
+bool Tablero::CaminoLibre(int x_inicial, int y_inicial, int x_final, int y_final)
 {
-    return true;
+    int diferencia_x = x_final - x_inicial;
+    int diferencia_y = y_final - y_inicial;
+
+    // Ver para donde voy a caminar( si en x, en y, o en ambos.)
+    int paso_x, paso_y;
+    if (diferencia_x == 0) {
+        paso_x = 0;
+    } else {
+        if (diferencia_x > 0) {
+            paso_x = 1;
+        } else {
+            paso_x = -1;
+        }
+    }
+    if (diferencia_y == 0) {
+        paso_y = 0;
+
+    } else {
+        if (diferencia_y > 0) {
+            paso_y = 1;
+        } else {
+            paso_y = -1;
+        }
+    }
+
+    // nos movemos al de enfrente pues no tiene caso revisar si mismo.
+    int x_actual = x_inicial + paso_x;
+    int y_actual = y_inicial + paso_y;
+
+    // Ahora, recorremos!!!
+    while (x_actual != x_final || y_actual != y_final) {
+        if (tablero[y_actual][x_actual] != nullptr) { // Que NO estorbe nada...
+            return false;
+        }
+        x_actual += paso_x;
+        y_actual += paso_y;
+    }
+    return true; // Si acabamos y no estorbo nada...
 }
-*/
 
 // ****************************** //
 Tablero::Tablero()

@@ -2,17 +2,17 @@ En este markdown se enlista las tareas pendientes (o almenos las que se me ocurr
 para terminar el proyecto de Ajedrez!!
 
 # Mécanicas de juego
-- [ ] Movimientos legales
+- [x] Movimientos legales
     - [x] Movimiento del Peon
-    - [ ] Movimiento de la Torre
-    - [ ] Movimiento del Alfil
-    - [ ] Movimiento del caballo
-    - [ ] Movimiento de la Reina
-    - [ ] Movimiento del Rey
+    - [x] Movimiento de la Torre
+    - [x] Movimiento del Alfil
+    - [x] Movimiento del caballo
+    - [x] Movimiento de la Reina
+    - [x] Movimiento del Rey
 
 
-- [ ] Implementar las colisiones (Un alfil no puede salir movimiento 1, pero caballo puede saltar piezas)
-- [-] No poder capturar piezas del mismo color (Actualmente si se puede, pues apenas hay movimiento libre)
+- [x] Implementar las colisiones (Un alfil no puede salir movimiento 1, pero caballo puede saltar piezas)
+- [x] No poder capturar piezas del mismo color (Actualmente si se puede, pues apenas hay movimiento libre)
 
 # Flujo del juego
 - [ ] Turnos

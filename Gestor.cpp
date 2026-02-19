@@ -84,7 +84,9 @@ void Gestor::Actualizar()
             // desselecciona pero si SI es, la mueve. Aqui tambien se cambiara de estado a
             // "YaMovido = true" etc, dependiendo de la pieza.
             if (piezaSeleccionada->MovimientoPermitido(col, fila, this->tablero)) {
-                if (piezaSeleccionada->ObtenerTipoPieza() == PEON) {
+                if (piezaSeleccionada->ObtenerTipoPieza() == PEON &&
+                    !piezaSeleccionada->ObtenerYaMovido()) {
+
                     piezaSeleccionada->AlternarYaMovido();
                 }
                 // Si habia algo, borro la memoria

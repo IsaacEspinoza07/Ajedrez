@@ -2,6 +2,7 @@
 #include "Tablero.hpp"
 #include "raylib.h"
 #include "texturas.hpp"
+#include <cmath>
 
 // ************* DE PIEZA **************** //
 
@@ -27,6 +28,11 @@ Pieza::~Pieza()
 bool Pieza::ObtenerColor()
 {
     return color;
+}
+
+bool Pieza::ObtenerYaMovido()
+{
+    return YaMovido;
 }
 
 void Pieza::AlternarYaMovido()
@@ -110,9 +116,18 @@ void Torre::Dibujar(GestionTexturas &texturas)
                    WHITE);
 }
 
-bool Torre::MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero)
+bool Torre::MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero)
 {
-    return 1;
+    bool Recto = (nueva_x == coor_x || nueva_y == coor_y);
+    if (!Recto) {
+        return false;
+    }
+
+    if (!tablero->CaminoLibre(coor_x, coor_y, nueva_x, nueva_y)) {
+        return false;
+    }
+
+    return true;
 }
 
 // ***************** ALFIL ***************** //
@@ -133,9 +148,20 @@ void Alfil::Dibujar(GestionTexturas &texturas)
                    WHITE);
 }
 
-bool Alfil::MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero)
+bool Alfil::MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero)
 {
-    return 1;
+
+    // Si aumente tanto en X como en Y LO MISMO, es diagonal (obviamente)
+    bool diagonal = (std::abs(nueva_x - coor_x) == std::abs(nueva_y - coor_y));
+
+    if (!diagonal) {
+        return false;
+    }
+    if (!tablero->CaminoLibre(coor_x, coor_y, nueva_x, nueva_y)) {
+        return false;
+    }
+
+    return true;
 }
 
 // ***************** CABALLO ***************** //
@@ -156,9 +182,18 @@ void Caballo::Dibujar(GestionTexturas &texturas)
                    WHITE);
 }
 
-bool Caballo::MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero)
+bool Caballo::MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero)
 {
-    return 1;
+    // Movimiento vertical
+    if ((std::abs(coor_y - nueva_y) == 2 && std::abs(coor_x - nueva_x) == 1)) {
+        return true;
+    }
+    // Movimiento lateral
+    if ((std::abs(coor_y - nueva_y) == 1 && std::abs(coor_x - nueva_x) == 2)) {
+        return true;
+    }
+
+    return false;
 }
 
 // ***************** REINA ***************** //
@@ -180,9 +215,19 @@ void Reina::Dibujar(GestionTexturas &texturas)
                    WHITE);
 }
 
-bool Reina::MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero)
+bool Reina::MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero)
 {
-    return 1;
+    // Mezclar la Torre y el Alfil (lit copiar y pegar)
+    bool Recto = (nueva_x == coor_x || nueva_y == coor_y);
+    bool diagonal = (std::abs(nueva_x - coor_x) == std::abs(nueva_y - coor_y));
+
+    if (!diagonal && !Recto) {
+        return false;
+    }
+    if (!(tablero->CaminoLibre(coor_x, coor_y, nueva_x, nueva_y))) {
+        return false;
+    }
+    return true;
 }
 
 // ***************** REY ***************** //
@@ -203,7 +248,12 @@ void Rey::Dibujar(GestionTexturas &texturas)
                    WHITE);
 }
 
-bool Rey::MovimientoPermitido(int x_nueva, int y_nueva, Tablero *tablero)
+bool Rey::MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero)
 {
-    return 1;
+    if ((std::abs(coor_x - nueva_x) == 1 && std::abs(coor_y - nueva_y) == 0) ||
+        (std::abs(coor_x - nueva_x) == 0 && std::abs(coor_y - nueva_y) == 1) ||
+        (std::abs(coor_x - nueva_x) == 1 && std::abs(coor_y - nueva_y) == 1)) {
+        return true;
+    }
+    return false;
 }
