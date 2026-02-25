@@ -13,7 +13,7 @@ public:
 
     int Obtener_x();
     int Obtener_y();
-    void CambiarPosicion(int nueva_fila, int nueva_col);
+    void CambiarPosicion(int nueva_col, int nueva_fila);
     virtual ~Pieza();
     virtual bool MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero) = 0;
     bool ObtenerColor();

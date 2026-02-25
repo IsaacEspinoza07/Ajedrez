@@ -116,3 +116,30 @@ Tablero::~Tablero()
         }
     }
 }
+
+// ****************************** //
+Pieza *Tablero::ObtenerPieza(int renglon, int columna)
+{
+    return this->tablero[renglon][columna];
+}
+
+// ****************************** //
+void Tablero::MoverPieza(int fila_pieza, int col_pieza, int nueva_fila, int nueva_col)
+{
+    // Capturar si hay pieza
+    if (this->ObtenerPieza(nueva_fila, nueva_col) != nullptr) {
+        CapturarPieza(nueva_fila, nueva_col);
+    }
+    // Cambiar el punterito
+    this->tablero[nueva_fila][nueva_col] = this->tablero[fila_pieza][col_pieza];
+    this->tablero[fila_pieza][col_pieza] = nullptr; // Limpiamos donde andabamos.
+
+    this->tablero[nueva_fila][nueva_col]->CambiarPosicion(nueva_col, nueva_fila);
+}
+
+// ****************************** //
+void Tablero::CapturarPieza(int nueva_fila, int nueva_col)
+{
+    delete this->tablero[nueva_fila][nueva_col];
+    this->tablero[nueva_fila][nueva_col] = nullptr;
+}

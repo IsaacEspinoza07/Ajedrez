@@ -53,8 +53,8 @@ void Gestor::Actualizar()
         if (estadoActual == EstadoTurno::ESPERANDO_SELECCION) {
 
             // Dimos click y HABIA una pieza. Si no, no hace nada.
-            if (tablero->tablero[fila][col] != nullptr) { // Hay una pieza...
-                piezaSeleccionada = tablero->tablero[fila][col];
+            if (tablero->ObtenerPieza(fila, col) != nullptr) { // Hay una pieza...
+                piezaSeleccionada = tablero->ObtenerPieza(fila, col);
                 fila_seleccionada = fila;
                 col_seleccionada = col;
                 estadoActual = EstadoTurno::PIEZA_SELECCIONADA;
@@ -71,9 +71,9 @@ void Gestor::Actualizar()
             }
 
             // Impedir que se coma piezas del mismo color
-            if (tablero->tablero[fila][col] != nullptr &&
-                tablero->tablero[fila_seleccionada][col_seleccionada]->ObtenerColor() ==
-                    tablero->tablero[fila][col]->ObtenerColor()) {
+            if (tablero->ObtenerPieza(fila, col) != nullptr &&
+                tablero->ObtenerPieza(fila_seleccionada, col_seleccionada)->ObtenerColor() ==
+                    tablero->ObtenerPieza(fila, col)->ObtenerColor()) {
                 estadoActual = EstadoTurno::ESPERANDO_SELECCION;
                 piezaSeleccionada = nullptr;
                 return;
@@ -89,16 +89,11 @@ void Gestor::Actualizar()
 
                     piezaSeleccionada->AlternarYaMovido();
                 }
-                // Si habia algo, borro la memoria
-                if (tablero->tablero[fila][col] != nullptr) {
-                    delete tablero->tablero[fila][col];
-                }
 
                 // Luego cambio la posición de la pieza movida:
-                tablero->tablero[fila][col] = piezaSeleccionada; // Cambiar
-                tablero->tablero[fila_seleccionada][col_seleccionada] = nullptr;
 
-                piezaSeleccionada->CambiarPosicion(col, fila);
+                tablero->MoverPieza(fila_seleccionada, col_seleccionada, fila, col);
+
                 piezaSeleccionada = nullptr;
                 estadoActual = EstadoTurno::ESPERANDO_SELECCION;
             } else {

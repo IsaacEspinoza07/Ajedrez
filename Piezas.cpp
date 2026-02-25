@@ -6,10 +6,10 @@
 
 // ************* DE PIEZA **************** //
 
-void Pieza::CambiarPosicion(int nueva_fila, int nueva_col)
+void Pieza::CambiarPosicion(int nueva_col, int nueva_fila)
 {
-    this->coor_x = nueva_fila;
-    this->coor_y = nueva_col;
+    this->coor_x = nueva_col;  // x = columna
+    this->coor_y = nueva_fila; // y = fila
 }
 
 float conversor_x(int x)
@@ -72,22 +72,22 @@ bool Peon::MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero)
 
     // Movimiento simple (un paso nomás)
     if (nueva_x == coor_x && nueva_y == coor_y + orientacion) {
-        return (tablero->tablero[nueva_y][nueva_x] == nullptr);
+        return (tablero->ObtenerPieza(nueva_y, nueva_x) == nullptr);
         // Si a donde me muevo NO hay pieza, regreso true.
     }
 
     // Movimiento incial doble
     if (nueva_x == coor_x && nueva_y == coor_y + (2 * orientacion) && !YaMovido) {
-        bool camino_libre = (tablero->tablero[coor_y + orientacion][coor_x] ==
+        bool camino_libre = (tablero->ObtenerPieza(coor_y + orientacion, coor_x) ==
                              nullptr); // Si NO me salto nada, y...
-        bool nuevaPos_libre = (tablero->tablero[nueva_y][nueva_x] ==
+        bool nuevaPos_libre = (tablero->ObtenerPieza(nueva_y, nueva_x) ==
                                nullptr); // No capturo nada (porque es directamente enfrente)
         return camino_libre && nuevaPos_libre;
     }
 
     // Captura diagonal
     if ((nueva_x == coor_x + 1 || nueva_x == coor_x - 1) && nueva_y == coor_y + orientacion) {
-        Pieza *piezaCapturada = tablero->tablero[nueva_y][nueva_x];
+        Pieza *piezaCapturada = tablero->ObtenerPieza(nueva_y, nueva_x);
         return (piezaCapturada != nullptr && piezaCapturada->ObtenerColor() != color);
     }
 
@@ -96,7 +96,6 @@ bool Peon::MovimientoPermitido(int nueva_x, int nueva_y, Tablero *tablero)
     // Si no paso nada de esto...
     return false;
 }
-
 // ***************** TORRE ***************** //
 Torre::Torre(bool color, int x, int y)
 {
