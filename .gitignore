@@ -5,6 +5,7 @@ obj/
 Ajedrez      # Nombre de tu ejecutable final
 lua/
 
+
 # Configuración del editor (LSP)
 compile_commands.json
 .vscode/

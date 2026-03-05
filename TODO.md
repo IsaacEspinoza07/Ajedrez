@@ -16,7 +16,9 @@ para terminar el proyecto de Ajedrez!!
 
 # Flujo del juego
 - [ ] Turnos
-- [ ] Detección del Jaque
+- [x] Detección del Jaque (función que detecta si está en jaque el Rey)
+    - [ ] Permitir que movimientos de captura u otros puedan quitar el estado de jaque
+    - [ ] Otros detalles con jaque
 - [ ] Detección del Jaque-Mate
 - [ ] Tablas (empate)
 

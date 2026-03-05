@@ -31,7 +31,8 @@ Vector2 Gestor::coorACasilla(int mouse_x, int mouse_y)
 
     return (Vector2){(float)casillaX, (float)casillaY};
 }
-
+#include <iostream>
+using std::cout;
 void Gestor::Actualizar()
 {
     // Detectar el mouse
@@ -54,14 +55,27 @@ void Gestor::Actualizar()
 
             // Dimos click y HABIA una pieza. Si no, no hace nada.
             if (tablero->ObtenerPieza(fila, col) != nullptr) { // Hay una pieza...
-                piezaSeleccionada = tablero->ObtenerPieza(fila, col);
-                fila_seleccionada = fila;
-                col_seleccionada = col;
-                estadoActual = EstadoTurno::PIEZA_SELECCIONADA;
+                // TODO: La verificación de jaque (por ahora, creo que deberia estar aqui)
+
+                if (tablero->EsJaque(BLANCO)) {
+                    // Si esta en jaque, verificar que NOMÁS mueva al rey.
+                    piezaSeleccionada = tablero->ObtenerPieza(fila, col);
+                    if (piezaSeleccionada->ObtenerTipoPieza() == REY) {
+                        fila_seleccionada = fila;
+                        col_seleccionada = col;
+                        estadoActual = EstadoTurno::PIEZA_SELECCIONADA;
+                    }
+
+                } else {
+                    // Si NOOO esta en jaque, que mueva lo que sea.
+                    piezaSeleccionada = tablero->ObtenerPieza(fila, col);
+                    fila_seleccionada = fila;
+                    col_seleccionada = col;
+                    estadoActual = EstadoTurno::PIEZA_SELECCIONADA;
+                }
             }
 
         } else if (estadoActual == EstadoTurno::PIEZA_SELECCIONADA) {
-            // TODO: Por aquí va la logica de los movimientos. Por ahora será mov-Libre.
 
             // Evitamos que mueva a la misma casilla
             if (fila == fila_seleccionada && col == col_seleccionada) {
@@ -96,7 +110,15 @@ void Gestor::Actualizar()
 
                 piezaSeleccionada = nullptr;
                 estadoActual = EstadoTurno::ESPERANDO_SELECCION;
+            } else if (piezaSeleccionada->ObtenerTipoPieza() == REY &&
+                       this->tablero->EsJaque(BLANCO) &&
+                       piezaSeleccionada->MovimientoPermitido(col, fila, this->tablero)) {
+                tablero->MoverPieza(fila_seleccionada, col_seleccionada, fila, col);
+                piezaSeleccionada = nullptr;
+                estadoActual = EstadoTurno::ESPERANDO_SELECCION;
+
             } else {
+
                 estadoActual = EstadoTurno::ESPERANDO_SELECCION;
                 piezaSeleccionada = nullptr;
                 return;

@@ -1,6 +1,7 @@
 #include "Tablero.hpp"
 #include "Piezas.hpp"
 #include "texturas.hpp"
+// #include <cmath>
 
 void Tablero::Inicializar()
 {
@@ -142,4 +143,251 @@ void Tablero::CapturarPieza(int nueva_fila, int nueva_col)
 {
     delete this->tablero[nueva_fila][nueva_col];
     this->tablero[nueva_fila][nueva_col] = nullptr;
+}
+
+bool Tablero::EsJaque(bool color)
+{
+    int fila_rey, col_rey;
+
+    // Buscamos donde esta el rey del color buscado. O(64), tonses no es pesado.
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            if (this->ObtenerPieza(i, j) != nullptr &&
+                this->tablero[i][j]->ObtenerTipoPieza() == REY &&
+                this->tablero[i][j]->ObtenerColor() == color) {
+
+                fila_rey = i;
+                col_rey = j;
+                break;
+            }
+        }
+    }
+    // ====== VERIFICACION VERTICAL Y LATERAL ========
+    // Primeor arriba
+    for (int i = fila_rey - 1; i >= 0; --i) {
+        Pieza *pAux = ObtenerPieza(i, col_rey); // Ayudara simplificando
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color &&
+                (pAux->ObtenerTipoPieza() == REINA || pAux->ObtenerTipoPieza() == TORRE)) {
+                return true;
+            }
+            break; // No enconro nada.
+        }
+    }
+
+    // Ahora abajo
+    for (int i = fila_rey + 1; i <= 7; ++i) {
+        Pieza *pAux = ObtenerPieza(i, col_rey);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color &&
+                (pAux->ObtenerTipoPieza() == REINA || pAux->ObtenerTipoPieza() == TORRE)) {
+                return true;
+            }
+            break;
+        }
+    }
+
+    // Checamos derecha
+    for (int i = col_rey + 1; i <= 7; ++i) {
+        Pieza *pAux = ObtenerPieza(fila_rey, i);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color &&
+                (pAux->ObtenerTipoPieza() == REINA || pAux->ObtenerTipoPieza() == TORRE)) {
+                return true;
+            }
+            break;
+        }
+    }
+
+    // Ahora izquierda
+    for (int i = col_rey - 1; i >= 0; --i) {
+        Pieza *pAux = ObtenerPieza(fila_rey, i);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color &&
+                (pAux->ObtenerTipoPieza() == REINA || pAux->ObtenerTipoPieza() == TORRE)) {
+                return true;
+            }
+            break;
+        }
+    }
+
+    //=====VERIFICACION DE DIAGONALES =======
+    // Primero diagonal izq-superior
+    int dx = col_rey - 1, dy = fila_rey - 1;
+    while (dx >= 0 && dy >= 0) {
+        Pieza *pAux = ObtenerPieza(dy, dx);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color &&
+                (pAux->ObtenerTipoPieza() == REINA || pAux->ObtenerTipoPieza() == ALFIL)) {
+                return true;
+            }
+            break;
+        }
+        --dx;
+        --dy;
+    }
+
+    // Diagonal izq-inferior
+    dx = col_rey - 1;
+    dy = fila_rey + 1;
+    while (dx >= 0 && dy <= 7) {
+        Pieza *pAux = ObtenerPieza(dy, dx);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color &&
+                (pAux->ObtenerTipoPieza() == REINA || pAux->ObtenerTipoPieza() == ALFIL)) {
+                return true;
+            }
+            break;
+        }
+        --dx;
+        ++dy;
+    }
+
+    // Diagonal der-superior
+    dx = col_rey + 1;
+    dy = fila_rey - 1;
+    while (dx <= 7 && dy >= 0) {
+        Pieza *pAux = ObtenerPieza(dy, dx);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color &&
+                (pAux->ObtenerTipoPieza() == REINA || pAux->ObtenerTipoPieza() == ALFIL)) {
+                return true;
+            }
+            break;
+        }
+        ++dx;
+        --dy;
+    }
+    // Diagonal der-inferior
+    dx = col_rey + 1;
+    dy = fila_rey + 1;
+    while (dx <= 7 && dy <= 7) {
+        Pieza *pAux = ObtenerPieza(dy, dx);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color &&
+                (pAux->ObtenerTipoPieza() == REINA || pAux->ObtenerTipoPieza() == ALFIL)) {
+                return true;
+            }
+            break;
+        }
+        ++dx;
+        ++dy;
+    }
+
+    // Verificamos caballo
+    // Primero checamos en L-arriba
+    if (fila_rey - 2 >= 0 && col_rey - 1 >= 0) {
+        Pieza *pAux = ObtenerPieza(fila_rey - 2, col_rey - 1);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == CABALLO) {
+                return true;
+            }
+        }
+    }
+    if (fila_rey - 2 >= 0 && col_rey + 1 <= 7) {
+        Pieza *pAux = ObtenerPieza(fila_rey - 2, col_rey + 1);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == CABALLO) {
+                return true;
+            }
+        }
+    }
+    // Luego  checamos en L-abajo
+    if (fila_rey + 2 <= 7 && col_rey - 1 >= 0) {
+        Pieza *pAux = ObtenerPieza(fila_rey + 2, col_rey - 1);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == CABALLO) {
+                return true;
+            }
+        }
+    }
+    if (fila_rey + 2 <= 7 && col_rey + 1 <= 7) {
+        Pieza *pAux = ObtenerPieza(fila_rey + 2, col_rey + 1);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == CABALLO) {
+                return true;
+            }
+        }
+    }
+
+    // Luego checamos L-izquierda
+    if (col_rey - 2 >= 0 && fila_rey - 1 >= 0) {
+        Pieza *pAux = ObtenerPieza(fila_rey - 1, col_rey - 2);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == CABALLO) {
+                return true;
+            }
+        }
+    }
+    if (col_rey - 2 >= 0 && fila_rey + 1 <= 7) {
+        Pieza *pAux = ObtenerPieza(fila_rey + 1, col_rey - 2);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == CABALLO) {
+                return true;
+            }
+        }
+    }
+
+    // Por ultimo L-Derecha
+    if (col_rey + 2 <= 7 && fila_rey - 1 >= 0) {
+        Pieza *pAux = ObtenerPieza(fila_rey - 1, col_rey + 2);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == CABALLO) {
+                return true;
+            }
+        }
+    }
+    if (col_rey + 2 <= 7 && fila_rey + 1 <= 7) {
+        Pieza *pAux = ObtenerPieza(fila_rey + 1, col_rey + 2);
+        if (pAux != nullptr) {
+            if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == CABALLO) {
+                return true;
+            }
+        }
+    }
+
+    // Verificamos en su rango (peon)
+    if (color == BLANCO) {
+        if (fila_rey - 1 >= 0 && col_rey - 1 >= 0) { // arriba izquierda
+            Pieza *pAux = ObtenerPieza(fila_rey - 1, col_rey - 1);
+            if (pAux != nullptr) {
+                if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == PEON) {
+                    return true;
+                }
+            }
+        }
+        if (fila_rey - 1 >= 0 && col_rey + 1 <= 7) { // arriba derecha
+            Pieza *pAux = ObtenerPieza(fila_rey - 1, col_rey + 1);
+            if (pAux != nullptr) {
+                if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == PEON) {
+                    return true;
+                }
+            }
+        }
+
+    } else {                                         // Fue color negro...
+        if (fila_rey + 1 <= 7 && col_rey - 1 >= 0) { // abajo izquierda
+            Pieza *pAux = ObtenerPieza(fila_rey + 1, col_rey - 1);
+            if (pAux != nullptr) {
+                if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == PEON) {
+                    return true;
+                }
+            }
+        }
+        if (fila_rey + 1 <= 7 && col_rey + 1 <= 7) { // abajo derecha
+            Pieza *pAux = ObtenerPieza(fila_rey + 1, col_rey + 1);
+            if (pAux != nullptr) {
+                if (pAux->ObtenerColor() != color && pAux->ObtenerTipoPieza() == PEON) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+
+void Tablero::AlternarTurno()
+{
+    this->turno = (this->turno == BLANCO) ? NEGRO : BLANCO;
 }

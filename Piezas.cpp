@@ -50,6 +50,7 @@ int Pieza::ObtenerTipoPieza()
 // ***************** PEON ***************** //
 Peon::Peon(bool color, int x, int y)
 {
+    ;
     this->color = color;
     this->coor_x = x;
     this->coor_y = y;

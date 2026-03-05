@@ -2,7 +2,7 @@
 
 #include "texturas.hpp"
 
-enum { PEON, TORRE, ALFIL, CABALLO, REINA, REY };
+enum { PEON = 0, TORRE, ALFIL, CABALLO, REINA, REY };
 enum { BLANCO = 0, NEGRO };
 
 class Tablero; // Avisarle que SÍ existe la clase "Tablero"
@@ -26,7 +26,7 @@ protected:
     int coor_x;        // coordenadas a lo largo.
     int coor_y;        // coordenadas a lo alto.
     bool YaMovido = 0; // 0: No se ha movido. 1: Ya fue movida.
-    unsigned int tipo = 0;
+    int tipo = 0;
 };
 
 // *********************** PIEZAS ************************** //
